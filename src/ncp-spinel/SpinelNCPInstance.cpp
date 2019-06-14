@@ -980,6 +980,79 @@ bail:
 }
 
 static int
+unpack_ncp_counters_all_spinel(const uint8_t *data_in, spinel_size_t data_len, boost::any& value, bool as_val_map)
+{
+	std::list<std::string> result_as_string;
+	ValueMap result_as_val_map;
+	int ret = kWPANTUNDStatus_Ok;
+
+	const char *spinel_counter_names[] = {
+		"NCP:Counter:LogReqestCount",
+		"NCP:Counter:LogReqestFail",
+		"NCP:Counter:EnqueueResponseCount",
+		"NCP:Counter:EnqueueResponseFail",
+		"NCP:Counter:UpdatePropsCount",
+		"NCP:Counter:UpdatePropsFail",
+		"NCP:Counter:SendDatagramCount",
+		"NCP:Counter:SendDatagramFail",
+		NULL
+	};
+
+	const char **counter_names = spinel_counter_names;
+	const uint8_t *struct_in = NULL;
+	unsigned int struct_len = 0;
+	spinel_size_t len;
+
+	len = spinel_datatype_unpack(
+		data_in,
+		data_len,
+		SPINEL_DATATYPE_DATA_WLEN_S,
+		&struct_in,
+		&struct_len
+	);
+
+	require_action(len > 0, bail, ret = kWPANTUNDStatus_Failure);
+
+	data_in += len;
+	data_len -= len;
+
+	while (*counter_names != NULL) {
+		uint32_t counter_value;
+
+		len = spinel_datatype_unpack(
+			struct_in,
+			struct_len,
+			SPINEL_DATATYPE_UINT32_S,
+			&counter_value
+		);
+
+		require_action(len > 0, bail, ret = kWPANTUNDStatus_Failure);
+
+		struct_in  += len;
+		struct_len -= len;
+
+		if (!as_val_map) {
+			char c_string[200];
+			snprintf(c_string, sizeof(c_string), "%-32s = %d", *counter_names, counter_value);
+			result_as_string.push_back(std::string(c_string));
+		} else {
+			result_as_val_map[*counter_names] = counter_value;
+		}
+
+		counter_names++;
+	}
+
+	if (as_val_map) {
+		value = result_as_val_map;
+	} else {
+		value = result_as_string;
+	}
+
+bail:
+	return ret;
+}
+
+static int
 unpack_ncp_counters_mle(const uint8_t *data_in, spinel_size_t data_len, boost::any& value, bool as_val_map)
 {
 	std::list<std::string> result_as_string;
@@ -2230,6 +2303,14 @@ SpinelNCPInstance::regsiter_all_get_handlers(void)
 		kWPANTUNDProperty_NCPCounterAllMacAsValMap,
 		SPINEL_CAP_COUNTERS,
 		SPINEL_PROP_CNTR_ALL_MAC_COUNTERS, boost::bind(unpack_ncp_counters_all_mac, _1, _2, _3, true));
+	register_get_handler_capability_spinel_unpacker(
+		kWPANTUNDProperty_NCPCounterAllSpinel,
+		SPINEL_CAP_COUNTERS,
+		SPINEL_PROP_CNTR_ALL_SPINEL_COUNTERS, boost::bind(unpack_ncp_counters_all_spinel, _1, _2, _3, false));
+	register_get_handler_capability_spinel_unpacker(
+		kWPANTUNDProperty_NCPCounterAllSpinelAsValMap,
+		SPINEL_CAP_COUNTERS,
+		SPINEL_PROP_CNTR_ALL_SPINEL_COUNTERS, boost::bind(unpack_ncp_counters_all_spinel, _1, _2, _3, true));
 	register_get_handler_capability_spinel_unpacker(
 		kWPANTUNDProperty_NCPCounterThreadMle,
 		SPINEL_CAP_COUNTERS,

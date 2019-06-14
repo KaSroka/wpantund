@@ -242,6 +242,8 @@
 #define kWPANTUNDProperty_NCPCounterAllMacAsValMap              "NCP:Counter:AllMac:AsValMap"
 #define kWPANTUNDProperty_NCPCounterThreadMle                   "NCP:Counter:Thread:Mle"
 #define kWPANTUNDProperty_NCPCounterThreadMleAsValMap           "NCP:Counter:Thread:Mle:AsValMap"
+#define kWPANTUNDProperty_NCPCounterAllSpinel                   "NCP:Counter:AllSpinel"
+#define kWPANTUNDProperty_NCPCounterAllSpinelAsValMap           "NCP:Counter:AllSpinel:AsValMap"
 
 #define kWPANTUNDProperty_NCPCounter_TX_PKT_TOTAL               "NCP:Counter:TX_PKT_TOTAL"
 #define kWPANTUNDProperty_NCPCounter_TX_PKT_UNICAST             "NCP:Counter:TX_PKT_UNICAST"
