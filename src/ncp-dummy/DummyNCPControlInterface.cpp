@@ -397,3 +397,9 @@ DummyNCPControlInterface::poke(uint32_t address, Data bytes, CallbackWithStatus 
 {
 	cb(kWPANTUNDStatus_FeatureNotImplemented);
 }
+
+void
+DummyNCPControlInterface::clear_all_spinel_counters(CallbackWithStatus cb)
+{
+	cb(kWPANTUNDStatus_FeatureNotImplemented);
+}

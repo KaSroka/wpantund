@@ -118,6 +118,7 @@ DBusIPCAPI_v1::init_callback_tables()
 	INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_PEEK, interface_peek_handler);
 	INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_POKE, interface_poke_handler);
 
+	INTERFACE_CALLBACK_CONNECT(WPANTUND_IF_CMD_CLEAR_ALL_SPINEL_COUNTERS, interface_clear_all_spinel_counters_handler);
 }
 
 static void
@@ -2001,6 +2002,22 @@ DBusIPCAPI_v1::interface_poke_handler(
 	ret = DBUS_HANDLER_RESULT_HANDLED;
 
 bail:
+	return ret;
+}
+
+DBusHandlerResult
+DBusIPCAPI_v1::interface_clear_all_spinel_counters_handler(
+   NCPControlInterface* interface,
+   DBusMessage *        message
+) {
+	DBusHandlerResult ret = DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+
+	dbus_message_ref(message);
+
+	interface->clear_all_spinel_counters(boost::bind(&DBusIPCAPI_v1::CallbackWithStatus_Helper,
+								 this, _1, message));
+	ret = DBUS_HANDLER_RESULT_HANDLED;
+
 	return ret;
 }
 

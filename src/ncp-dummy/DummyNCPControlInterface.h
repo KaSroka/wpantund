@@ -234,6 +234,9 @@ public:
 	virtual void peek(uint32_t address, uint16_t count,	CallbackWithStatusArg1 cb = NilReturn());
 	virtual void poke(uint32_t address, Data bytes,	CallbackWithStatus cb = NilReturn());
 
+
+	virtual void clear_all_spinel_counters(CallbackWithStatus cb = NilReturn());
+
 	virtual std::string get_name(void);
 
 	virtual NCPInstance& get_ncp_instance(void);

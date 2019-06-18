@@ -955,3 +955,13 @@ SpinelNCPControlInterface::poke(uint32_t address, Data bytes, CallbackWithStatus
 	}
 }
 
+void
+SpinelNCPControlInterface::clear_all_spinel_counters(CallbackWithStatus cb)
+{
+	mNCPInstance->start_new_task(SpinelNCPTaskSendCommand::Factory(mNCPInstance)
+		.set_callback(CallbackWithStatus(boost::bind(cb,kWPANTUNDStatus_Ok)))
+		.add_command(SpinelPackData(SPINEL_FRAME_PACK_CMD_CLEAR_ALL_SPINEL_COUNTERS))
+		.finish()
+	);
+}
+

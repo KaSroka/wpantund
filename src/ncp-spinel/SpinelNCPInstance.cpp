@@ -995,6 +995,8 @@ unpack_ncp_counters_all_spinel(const uint8_t *data_in, spinel_size_t data_len, b
 		"NCP:Counter:UpdatePropsFail",
 		"NCP:Counter:SendDatagramCount",
 		"NCP:Counter:SendDatagramFail",
+		"NCP:Counter:SendLogByteCount",
+		"NCP:Counter:DroppedLogByteCount",
 		NULL
 	};
 
@@ -5768,6 +5770,7 @@ SpinelNCPInstance::log_spinel_frame(SpinelFrameOrigin origin, const uint8_t *fra
 		case SPINEL_CMD_NOOP:
 		case SPINEL_CMD_RESET:
 		case SPINEL_CMD_NET_CLEAR:
+		case SPINEL_CMD_CLEAR_ALL_SPINEL_COUNTERS:
 			syslog(LOG_INFO, "%s (%d) %s", origin_str, tid, command_str);
 			break;
 

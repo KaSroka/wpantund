@@ -64,6 +64,7 @@ wpanctl_SOURCES = \
 	tool-cmd-host-did-wake.c \
 	tool-cmd-add-route.c \
 	tool-cmd-remove-route.c \
+	tool-cmd-clear-all-spinel-counters.c \
 	tool-updateprop.c \
 	wpanctl-utils.h \
 	commissioner-utils.h \
@@ -109,6 +110,7 @@ wpanctl_SOURCES = \
 	tool-cmd-add-service.c \
 	tool-cmd-remove-service.h \
 	tool-cmd-remove-service.c \
+	tool-cmd-clear-all-spinel-counters.h \
 	tool-updateprop.h \
 	$(NULL)
 

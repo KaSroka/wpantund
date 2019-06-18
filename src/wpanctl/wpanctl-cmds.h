@@ -53,6 +53,7 @@
 #include "tool-cmd-dataset.h"
 #include "tool-cmd-add-service.h"
 #include "tool-cmd-remove-service.h"
+#include "tool-cmd-clear-all-spinel-counters.h"
 
 #include "wpanctl-utils.h"
 
@@ -229,6 +230,11 @@
 		&tool_cmd_dataset \
 	}, \
 	{ "cd",   "Change current interface (command mode)", \
-	  &tool_cmd_cd                                            }
+	  &tool_cmd_cd                                            }, \
+	{ \
+		"clear-all-spinel-counters", \
+		"", \
+		&tool_cmd_clear_all_spinel_counters \
+	}
 
 #endif

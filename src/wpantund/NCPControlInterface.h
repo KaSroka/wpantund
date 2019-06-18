@@ -337,6 +337,10 @@ public:
 		CallbackWithStatus cb = NilReturn()
 	) = 0;
 
+	virtual void clear_all_spinel_counters(
+		CallbackWithStatus cb = NilReturn()
+	) = 0;
+
 public:
 	// ========================================================================
 	// Nest-Specific Member Functions

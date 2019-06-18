@@ -3735,6 +3735,7 @@ typedef enum
      */
     SPINEL_PROP_CNTR_MLE_COUNTERS = SPINEL_PROP_CNTR__BEGIN + 402,
 
+    // TODO: Align to the OpenThread impelementation.
     /// Spinel counters.
     /** Format: `SSSSSSSSS`  (Read-only)
      *
@@ -3750,6 +3751,9 @@ typedef enum
      *
      */
     SPINEL_PROP_CNTR_ALL_SPINEL_COUNTERS = SPINEL_PROP_CNTR__BEGIN + 403,
+
+    // TODO: Most likely this CMD should be moved up to other commands.
+    SPINEL_CMD_CLEAR_ALL_SPINEL_COUNTERS = SPINEL_PROP_CNTR__BEGIN + 404,
 
     SPINEL_PROP_CNTR__END = 0x800,
 
